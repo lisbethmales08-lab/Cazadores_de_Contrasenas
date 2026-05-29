@@ -107,7 +107,8 @@ class JuegoCazador:
         longitud = int(entrada)
         Contrasena.validar_longitud(longitud)
         return longitud
-
+    
+# El método jugar_ronda genera una contraseña, la valida y abre un cofre dependiendo de si la contraseña es válida o no, acumulando puntos o penalizaciones según corresponda.
     def jugar_ronda(self):
         try:
             longitud = self.solicitar_longitud()
