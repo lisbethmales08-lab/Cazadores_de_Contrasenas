@@ -112,24 +112,53 @@ class JuegoCazador:
     def jugar_ronda(self):
         try:
             longitud = self.solicitar_longitud()
-            contrasena_obj = Contrasena(longitud)
-            contrasena = contrasena_obj.valor
-            try:
-                Contrasena.validar_contrasena(contrasena)
-                tipo_cofre, puntos = Cofre.abrir_cofre(True)
-                self.puntos += puntos
-                print(f"\nContraseña generada: {contrasena}")
-                print(f"¡Contraseña válida! Abres un cofre {tipo_cofre} y ganas {puntos} puntos.")
-            except ContrasenaInvalidaError as error:
-                tipo_cofre, puntos = Cofre.abrir_cofre(False)
-                self.puntos += puntos
-                print(f"\nContraseña generada: {contrasena}")
-                print(f"Contraseña inválida: {error}")
-                print(f"Has abierto un cofre {tipo_cofre} y sufres {abs(puntos)} puntos de penalización.")
+            resultado = self.jugar_ronda_con_longitud(longitud)
+            if "error" in resultado:
+                print(f"Error: {resultado['error']}\n")
+                return
 
-            print(f"Puntos acumulados: {self.puntos}\n")
+            print(f"\nContraseña generada: {resultado['contrasena']}")
+            print(resultado['mensaje'])
+            print(f"Puntos acumulados: {resultado['puntos_acumulados']}\n")
         except (DatoNoNumericoError, LongitudInvalidaError) as error:
             print(f"Error: {error}\n")
+
+    def jugar_ronda_con_longitud(self, longitud: int) -> dict:
+        """Juega una ronda usando la longitud dada sin pedir entrada por consola.
+
+        Devuelve un diccionario con los resultados o una clave 'error' si la longitud es inválida.
+        """
+        try:
+            Contrasena.validar_longitud(longitud)
+        except (DatoNoNumericoError, LongitudInvalidaError) as e:
+            return {"error": str(e)}
+
+        contrasena_obj = Contrasena(longitud)
+        contrasena = contrasena_obj.valor
+
+        try:
+            Contrasena.validar_contrasena(contrasena)
+            tipo_cofre, puntos = Cofre.abrir_cofre(True)
+            self.puntos += puntos
+            valida = True
+            mensaje = f"¡Contraseña válida! Abres un cofre {tipo_cofre} y ganas {puntos} puntos."
+        except ContrasenaInvalidaError as error:
+            tipo_cofre, puntos = Cofre.abrir_cofre(False)
+            self.puntos += puntos
+            valida = False
+            mensaje = (
+                f"Contraseña inválida: {error}. Has abierto un cofre {tipo_cofre} "
+                f"y sufres {abs(puntos)} puntos de penalización."
+            )
+
+        return {
+            "contrasena": contrasena,
+            "valida": valida,
+            "tipo_cofre": tipo_cofre,
+            "puntos": puntos,
+            "mensaje": mensaje,
+            "puntos_acumulados": self.puntos,
+        }
 
     def iniciar_juego(self):
         print("Bienvenido al Juego del Cazador de Contraseñas")
