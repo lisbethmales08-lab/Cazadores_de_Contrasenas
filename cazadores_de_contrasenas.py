@@ -1,7 +1,7 @@
 import random
 import sys
 
-
+# Excepciones personalizadas para manejar errores específicos relacionados con la longitud de la contraseña, datos no numéricos y contraseñas inválidas.
 class LongitudInvalidaError(ValueError):
     pass
 
@@ -14,6 +14,7 @@ class ContrasenaInvalidaError(ValueError):
     pass
 
 
+# La clase Contrasena se encarga de generar y validar contraseñas según los criterios establecidos, utilizando caracteres permitidos y asegurando que no haya caracteres repetidos.
 class Contrasena:
     MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     MINUSCULAS = "abcdefghijklmnopqrstuvwxyz"
@@ -21,6 +22,7 @@ class Contrasena:
     ESPECIALES = "¿¡?=)(/¨*+-%&$#!."
     CARACTERES_PERMITIDOS = MAYUSCULAS + MINUSCULAS + NUMEROS + ESPECIALES
 
+# El constructor de la clase Contrasena recibe la longitud deseada para la contraseña, valida que sea válida y genera una contraseña aleatoria utilizando los caracteres permitidos.
     def __init__(self, longitud: int):
         self.longitud = longitud
         self.valor = self.generar_contrasena(longitud)

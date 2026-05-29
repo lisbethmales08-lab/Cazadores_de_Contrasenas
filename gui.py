@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
+# La clase CazadorGUI se encarga de crear la interfaz gráfica del juego "Cazadores de Contraseñas", permitiendo al usuario ingresar la longitud deseada para la contraseña, jugar rondas, mostrar resultados y acumular puntos.
+# Utiliza la clase JuegoCazador para manejar la lógica del juego y actualizar la interfaz
 from cazadores_de_contrasenas import JuegoCazador
 
 
