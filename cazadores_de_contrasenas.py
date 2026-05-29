@@ -87,12 +87,17 @@ class Cofre:
             tipo, puntos = cls.TIPO_MALDITO
         return tipo, puntos
 
-
+# Juego principal
 class JuegoCazador:
+    
+    # El constructor inicializa los puntos del jugador a cero.
     def __init__(self):
         self.puntos = 0
 
+# El método solicitar_longitud pide al usuario que ingrese la longitud de la contraseña, valida que sea un número y que cumpla con los requisitos mínimos.
     def solicitar_longitud(self):
+        
+        # Solicita al usuario que ingrese la longitud de la contraseña y valida que sea un número entero y que cumpla con los requisitos mínimos.
         entrada = input("Ingrese la longitud de la contraseña (mínimo 8): ")
         if not entrada.strip().isdigit():
             raise DatoNoNumericoError("Debe ingresar un número válido.")
@@ -136,7 +141,7 @@ class JuegoCazador:
                 print(f"\nJuego terminado. Puntos finales: {self.puntos}")
                 break
 
-
+# Punto de entrada del programa
 if __name__ == "__main__":
     try:
         juego = JuegoCazador()
