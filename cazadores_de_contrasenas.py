@@ -99,6 +99,8 @@ class JuegoCazador:
         
         # Solicita al usuario que ingrese la longitud de la contraseña y valida que sea un número entero y que cumpla con los requisitos mínimos.
         entrada = input("Ingrese la longitud de la contraseña (mínimo 8): ")
+        
+        # Valida que la entrada sea un número entero. Si no lo es, lanza una excepción DatoNoNumericoError.
         if not entrada.strip().isdigit():
             raise DatoNoNumericoError("Debe ingresar un número válido.")
 
